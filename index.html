@@ -57,13 +57,14 @@ button:hover{background:var(--c);color:#041014}
 <div id="startHint" style="display:none">Mouse look · WASD move · click to interact · ESC releases the mouse</div>
 
 <div id="introOverlay" class="overlay active"><h1 style="color:#ff5e6c">LAB 07 — CONTAINMENT BREACH</h1>
-<p>Nexonyx Biotech, Sublevel 4. 03:14.<br><br>The containment pod has cracked and the power is out. You are the only technician left. Restore power, stabilise the sample and reach the override to escape.</p>
-<div style="border:1px solid #1d4452;padding:14px 20px;margin:0 0 22px;max-width:620px;text-align:left;font-size:14px;line-height:1.8;color:#9ad8e8;background:#071014">
+<p>Nexonyx Biotech, Sublevel 4. 03:14.<br><br>Dr. Alden Voss ran gene-splicing trials on an unlisted subject — logged only as "Subject 07" — without clearance. Forty minutes ago the containment pod cracked. Power failed. Comms went dark. You're the only technician still on-site.<br><br>Restore power, stabilize the sample, and reach the containment override before contamination seals the room for good. The incident board on the west wall has hints if you get stuck — but the real clues are scattered through the lab.</p>
+<div style="border:1px solid #1d4452;padding:14px 20px;margin:0 0 22px;max-width:620px;text-align:left;font-size:13px;line-height:1.8;color:#9ad8e8;background:#071014">
 <b style="color:#27d3ff;letter-spacing:2px">HOW TO PLAY</b><br>
-• <b>WASD</b> to walk, <b>mouse</b> to look, <b>click</b> glowing things.<br>
-• When a window opens, your mouse is freed. Close it, then <b>click the room</b> to look around again.<br>
-• Press <b>N</b> for your notebook and <b>H</b> for an optional hint.<br>
-• <b style="color:#ffd25a">The periodic table is your friend!</b></div><button id="enterBtn">ENTER THE LAB</button></div>
+• <b>WASD</b> to walk. Move the <b>mouse</b> to look. <b>Click</b> glowing things to use them.<br>
+• When you click a note, a panel or anything that opens a window, your mouse is freed so you can use it. When you close it, <b>click once on the room</b> to look around again.<br>
+• Almost nothing here is just decoration. Most things either tell the story or help you solve a puzzle.<br>
+• Remember: <b style="color:#ffd25a">the periodic table is your friend!</b><br>
+• Press <b>N</b> for your notebook: write notes and re-read clues.<br>• Stuck? Press <b>H</b> for an optional hint. Hints only appear when you ask.<br>• Take your time. You have plenty of it.</div><button id="enterBtn">ENTER THE LAB</button></div>
 <div id="failOverlay" class="overlay"><h1 style="color:#ff5e6c">CONTAINMENT LOST</h1><p>Contamination reached 100%. The outer door seals automatically. Whatever Voss was hiding down here, it stays hidden — and so do you.</p><button onclick="location.reload()">RESTART</button></div>
 <div id="successOverlay" class="overlay"><h1 style="color:#3ddc8a">CONTAINMENT RESTORED</h1><p>You punch in the final code and the exit door hisses open. Cold air and daylight pour in. Behind you, the hallway lights die one by one. Whatever Voss made is still out there — but you are free.</p><button onclick="location.reload()">RESTART</button></div>
 
@@ -350,17 +351,17 @@ mk('a-cone',{rotation:'180 0 0','radius-bottom':.22,'radius-top':0,height:.45,ma
 mk('a-torus',{position:'0 -.4 0',rotation:'90 0 0',radius:.3,'radius-tubular':.02,material:E('#ffd25a',2)},mkr);
 const ml=mk('a-text',{align:'center',width:3.6,color:'#ffe9a0',position:'0 .6 0','look-at':'[camera]'},mkr);
 const put=(x,y,z,t)=>{mkr.removeAttribute('animation');mkr.setAttribute('position',`${x} ${y} ${z}`);mkr.setAttribute('animation',`property:position;from:${x} ${y} ${z};to:${x} ${y+.25} ${z};dir:alternate;loop:true;dur:700;easing:easeInOutSine`);ml.setAttribute('value',t);mkr.setAttribute('visible',true)};
-const MK={'POWER FAILURE':[-6.2,2.7,-2,'POWER SWITCHES'],'SAMPLE UNSTABLE':[-2,2.4,-3,'CLICK THE SAMPLE'],'MIXTURE UNSTABLE':[4.5,2.4,-6.1,'PICK A BOTTLE'],'VENT UNSEALED':[6.2,2.8,-2,'PRESS THE 3 BUTTONS'],'OVERRIDE AVAILABLE':[0,3.3,6.0,'FINISH THE 4 PANELS'],'HALLWAY POWER':[-2.2,3.1,11.5,'CIRCUIT PANEL'],'GATE LOCK':[2.2,2.8,26.2,'GATE KEYPAD'],'FINAL EXIT':[1.8,2.8,34.5,'EXIT LOCK']};
+const MK={'POWER FAILURE':[-6.2,2.7,-2,'POWER SWITCHES'],'SAMPLE UNSTABLE':[-2,2.4,-3,'CLICK THE SAMPLE'],'MIXTURE UNSTABLE':[4.5,2.4,-6.1,'PICK A BOTTLE'],'VENT UNSEALED':[6.2,2.8,-2,'PRESS THE 3 BUTTONS'],'OVERRIDE AVAILABLE':[0,3.3,6.0,'FINISH THE 4 PANELS'],'HALLWAY POWER':[-2.2,3.1,11.5,'FUSE BOX'],'GATE LOCK':[2.2,2.8,26.2,'GATE KEYPAD'],'FINAL EXIT':[1.8,2.8,34.5,'EXIT LOCK']};
 const OB={'POWER FAILURE':'STEP 1 of 8 — Turn on the power. Read the vial colours on the sample rack (left wall), left to right. Press the switches with the same dot colours, in that order. Never press X.',
 'SAMPLE UNSTABLE':'STEP 2 of 8 — Click the glowing green sample. Then put each coloured ball in its slot on the gene machine. Each slot names an element; the colour chart on the back wall shows its colour.',
 'MIXTURE UNSTABLE':'STEP 3 of 8 — The back-wall screen says PINK. On the colour chart, pink means ALKALI METAL (Li, Na, K). Click the bottle that is an alkali metal.',
 'VENT UNSEALED':'STEP 4 of 8 — Seal the vent. Press the buttons on the right wall in this order: He, then Ne, then Ar. (Lightest to heaviest: He is element 2, Ne is 10, Ar is 18.)',
 'OVERRIDE AVAILABLE':'STEP 5 of 8 — Finish the 4 panels on the big door: Hand Scan, Stabiliser, Lasers, Terminal. The notes on the walls tell you what to enter.',
-'HALLWAY POWER':'STEP 6 of 8 — The hallway is dark. Go to the CIRCUIT PANEL on the left wall and turn all 9 lights ON. (Each click also flips the lights next to it.)',
-'GATE LOCK':'STEP 7 of 8 — Gate 2 is locked. Read the SECURITY QUESTION on the left wall and type the answer on the gate keypad.',
+'HALLWAY POWER':'STEP 6 of 8 — The hallway is dark. Go to the FUSE BOX on the left wall. Press the fuses in the same order as the lamps, top to bottom.',
+'GATE LOCK':'STEP 7 of 8 — Read the BREACH LOG on the left wall. Enter its 4 digits on the gate keypad (right wall).',
 'FINAL EXIT':'STEP 8 of 8 — Last lock! Use the panel at the end of the hall: move all 3 discs to the RIGHT peg.'};
 /* checklist */
-const steps=[['POWER FAILURE','Turn on the power'],['SAMPLE UNSTABLE','Fix the sample'],['MIXTURE UNSTABLE','Pick the right bottle'],['VENT UNSEALED','Seal the vent'],['OVERRIDE AVAILABLE','Open the door'],['HALLWAY POWER','Fix the circuit'],['GATE LOCK','Solve the pattern'],['FINAL EXIT','Escape!']];
+const steps=[['POWER FAILURE','Turn on the power'],['SAMPLE UNSTABLE','Fix the sample'],['MIXTURE UNSTABLE','Pick the right bottle'],['VENT UNSEALED','Seal the vent'],['OVERRIDE AVAILABLE','Open the door'],['HALLWAY POWER','Light the hallway'],['GATE LOCK','Open the gate'],['FINAL EXIT','Escape!']];
 const tl=document.createElement('div');tl.className='box';tl.id='tasksBox';tl.style.cssText='position:fixed;top:18px;right:18px;z-index:5;pointer-events:none;font-size:12px;line-height:1.8;min-width:200px';document.body.appendChild(tl);
 const draw=c=>{const k=steps.findIndex(x=>x[0]===c);if(k<0){if(c==='')tl.style.display='none';return}tl.style.display='block';tl.innerHTML=`<div class="tk-top">Task ${k+1} of ${steps.length}</div><div class="tk-name">${steps[k][1]}</div><div class="tk-bar">${steps.map((x,i)=>`<i class="${i<k?'d':i===k?'c':''}"></i>`).join('')}</div>`};draw('');
 new MutationObserver(()=>{let s=$('#stageName').textContent;if(s==='!! ANOMALY !!'){mkr.setAttribute('visible',false);draw('MIXTURE UNSTABLE');return}draw(s);if(MK[s])put(...MK[s]);setTimeout(()=>{if(OB[s])$('#objectiveBox').textContent=OB[s]},450)}).observe($('#stageName'),{childList:true,characterData:true,subtree:true});
@@ -541,7 +542,7 @@ let tms=[];
 const pt=[...document.querySelectorAll('a-text')].find(t=>(t.getAttribute('value')||'').startsWith('PERIODIC TABLE OF'));if(pt)pt.setAttribute('value','PERIODIC TABLE — YOUR FRIEND! (use it for the puzzles)');
 const mk=(t,a)=>{const e=document.createElement(t);for(const k in a)e.setAttribute(k,a[k]);W.appendChild(e);return e};
 const fr=[[-4.2,4.33,4.9,.05],[-4.2,2.47,4.9,.05],[-6.62,3.4,.05,1.9],[-1.78,3.4,.05,1.9]].map(([x,y,w,h])=>{const e=mk('a-box',{position:`${x} ${y} -6.93`,width:w,height:h,depth:.04,visible:false,material:'color:#ffd25a;emissive:#ffd25a;emissiveIntensity:2'});e.setAttribute('animation','property:material.emissiveIntensity;dir:alternate;loop:true;from:.4;to:3;dur:900');return e});
-Object.assign(H,{'HALLWAY POWER':[[0,'Clicking a light flips it and its neighbours. Try to switch all 9 ON.'],[0,'Press these lights: {CIRC}.']],'GATE LOCK':[[0,'Each number is double the one before it.'],[0,'The answer is 32.']],'FINAL EXIT':[[0,'Always move the smallest disc first. Never put a big disc on a small one.'],[0,'Moves (left=1, middle=2, right=3): 1>3, 1>2, 3>2, 1>3, 2>1, 2>3, 1>3.']]});
+Object.assign(H,{'HALLWAY POWER':[[0,'Look at the three coloured lamps on the left wall, top to bottom. Press the fuses in that colour order.'],[0,'The order is green, blue, red.']],'GATE LOCK':[[0,'The BREACH LOG tells you when the alarm started. The clock in Lab 07 stopped at that time.'],[0,'The code is 0314.']],'FINAL EXIT':[[0,'Always move the smallest disc first. Never put a big disc on a small one.'],[0,'Moves (left=1, middle=2, right=3): 1>3, 1>2, 3>2, 1>3, 2>1, 2>3, 1>3.']]});
 let lvl=0;
 new MutationObserver(()=>{const s=$('#stageName').textContent;tms.forEach(clearTimeout);tms=[];lvl=0;tms.push(setTimeout(()=>{if(!L.st.over&&H[s])window.NEXUS('Stuck? Press H if you want an optional hint.',7000)},150000));
  const on=['SAMPLE UNSTABLE','MIXTURE UNSTABLE','VENT UNSEALED'].includes(s);fr.forEach(e=>e.setAttribute('visible',on))}).observe($('#stageName'),{childList:true,characterData:true,subtree:true});
@@ -568,7 +569,7 @@ const note=(t,b)=>L.openM(t,'',c=>{const p=document.createElement('p');p.textCon
 /* shell */
 mk('a-plane',{position:'0 0 21',rotation:'-90 0 0',width:5,height:28,material:{src:fs,repeat:'2.5 14',roughness:.45,metalness:.5}});
 mk('a-plane',{position:'0 4 21',rotation:'90 0 0',width:5,height:28,material:M('#0d1417')});
-const OPS={'-1':[9.5,14.5,25,31],'1':[9.5]};
+const OPS={'-1':[],'1':[]};
 const segs=sd=>{const o=OPS[sd],out=[];let z0=7;o.forEach(oz=>{out.push([z0,oz-.6]);z0=oz+.6});out.push([z0,35]);return out};
 [-1,1].forEach(sd=>{segs(sd).forEach(([a,b])=>{const len=b-a;mk('a-plane',{position:`${sd*2.5} 2 ${(a+b)/2}`,rotation:`0 ${-sd*90} 0`,width:len,height:4,material:{src:ws,repeat:`${len/2} 1.6`,roughness:.85,metalness:.2}})});OPS[sd].forEach(oz=>mk('a-plane',{position:`${sd*2.5} 3.2 ${oz}`,rotation:`0 ${-sd*90} 0`,width:1.2,height:1.6,material:{src:ws,repeat:'.6 .64',roughness:.85,metalness:.2}}))});
 
@@ -578,14 +579,14 @@ const strips=[10,14,18,22,26,30,33.5].map(z=>B(0,3.95,z,1.6,.05,.4,E('#eaf8ff',.
 const lamps=[12,22,31].map(z=>mk('a-entity',{position:`0 3.4 ${z}`,light:'type:point;color:#dff4ff;intensity:0;distance:14;decay:2'}));
 /* decorative lab doors (locked) */
 const door=(side,z,label,msg)=>{const x=side*2.45,d=-side;B(x,1.15,z,.1,2.3,1.3,M('#141d21'));B(x+d*.04,1.1,z,.06,2.1,1.1,M('#2a363c','metalness:.6'));mk('a-plane',{position:`${x+d*.075} 1.6 ${z}`,rotation:`0 ${d*90} 0`,width:.5,height:.4,material:'color:#0a1418;emissive:#0e2a33;emissiveIntensity:.6'});mk('a-sphere',{position:`${x+d*.08} 1.15 ${z+.45}`,radius:.03,material:E('#ff3b4e',1.5)});T(label,x+d*.09,2.4,z,d*90,1.7,'#ffd25a');hit(x+d*.1,1.1,z,.3,2.3,1.3,msg)};
-[[20,'DECON A','Locked. You can hear a shower still running inside.']].forEach(([z,l,m])=>door(-1,z,l,m));
-[[14.5,'DR. VOSS — OFFICE','Locked. A child\'s drawing is taped to the door: a stick man holding a little girl\'s hand. "Come home, Daddy."'],[20,'DECON B','Locked. The window is smeared with green handprints.'],[25,'CLEAN ROOM 3','Locked. A warning light inside says: CONTAMINATED.'],[31,'SAFETY OFFICE','Locked. A sign reads: "Report all leaks. Even small ones."']].forEach(([z,l,m])=>door(1,z,l,m));
+[[9.5,'BIO STORAGE','Locked. Shelves of sample jars, all empty.'],[14.5,'CRYO LAB 2','Locked. Frost covers the window from the inside.'],[20,'DECON A','Locked. A shower is still running inside.'],[25,'SPECIMEN ARCHIVE','Locked. A sticker reads: "Project 07 files - DESTROYED".'],[31,'SERVER ROOM','Locked. A fan is spinning behind the door.']].forEach(([z,l,m])=>door(-1,z,l,m));
+[[9.5,'STAFF LOUNGE','Locked. A TV flickers inside.'],[14.5,'DR. VOSS — OFFICE','Locked. A child\'s drawing is taped to the door: "Come home, Daddy."'],[20,'DECON B','Locked. The window is smeared with green handprints.'],[25,'CLEAN ROOM 3','Locked. A warning light inside says: CONTAMINATED.'],[31,'SAFETY OFFICE','Locked. A sign reads: "Report all leaks."']].forEach(([z,l,m])=>door(1,z,l,m));
 /* gates */
 const gate=(z,label)=>{const g=B(0,1.8,z,5,3.6,.2,M('#202c31','metalness:.7'));for(let i=0;i<6;i++)B(0,-1.5+i*.6,-.12,4.9,.1,.02,i%2?E('#ffa51f',.5):M('#111'),0,g);T(label,0,1.5,-.13,180,3,'#ffd25a',g);for(let i=0;i<14;i++)B(-1.4+i*.2,.012,z-.5,.2,.01,.14,i%2?M('#111'):E('#ffa51f',.6));return g};
 const g1=gate(17,'SECURITY GATE 1'),g2=gate(27,'SECURITY GATE 2');
-/* puzzle 1: circuit panel */
-B(-2.4,1.15,11.5,.14,.9,.75,M('#2a363c','metalness:.5'));B(-2.32,1.15,11.5,.02,.8,.65,M('#10181b'));T('CIRCUIT PANEL\nHALL POWER',-2.36,2.5,11.5,90,1.8,'#ffd25a');
-for(let i=0;i<9;i++)mk('a-sphere',{position:`-2.31 ${1.45-Math.floor(i/3)*.22} ${11.28+(i%3)*.22}`,radius:.04,material:E('#ffa51f',.3)});
+/* puzzle 1: fuse box + lamps */
+B(-2.4,1.15,11.5,.14,.9,.75,M('#2a363c','metalness:.5'));B(-2.32,1.15,11.5,.02,.8,.65,M('#10181b'));T('FUSE BOX — HALL POWER',-2.36,2.8,11.5,90,1.8,'#ffd25a');
+[['#2ee58a',2.45],['#2d8cff',2.2],['#ff3b4e',1.95]].forEach(([c,y])=>mk('a-sphere',{position:`-2.38 ${y} 11.5`,radius:.06,material:E(c,2.4)}));
 /* gate keypad (puzzle 2) and exit keypad (puzzle 3) */
 B(2.4,1.3,26.2,.12,.5,.4,M('#10181b'));mk('a-plane',{position:'2.33 1.4 26.2',rotation:'0 -90 0',width:.3,height:.15,material:E('#0f6b4a',1)});T('GATE 2\nKEYPAD',2.32,1.85,26.2,-90,1.2,'#ffd25a');
 B(1.8,1.3,34.9,.4,.5,.12,M('#10181b'));mk('a-plane',{position:'1.8 1.4 34.83',rotation:'0 180 0',width:.3,height:.15,material:E('#0f6b4a',1)});T('EXIT LOCK\nTOWER PUZZLE',1.8,1.9,34.8,180,1.5,'#ffd25a');
@@ -598,9 +599,9 @@ mk('a-plane',{position:'0 .01 36',rotation:'-90 0 0',width:2.4,height:2,material
 mk('a-plane',{position:'0 1.5 35.2',rotation:'0 180 0',width:2.8,height:3.4,material:{src:skyT,shader:'flat',transparent:true,blending:'additive',depthWrite:false,fog:false}},outside);
 mk('a-entity',{position:'0 1.8 33.5',light:'type:point;color:#fff6dc;intensity:2.4;distance:12;decay:1.5'},outside);
 /* clue signs */
-const bs1=mk('a-plane',{position:'-2.47 1.9 22.5',rotation:'0 90 0',width:1.5,height:1.1,material:M('#3a0f14')});const bs2=T('SECURITY QUESTION\n\n2   4   8   16   ?\n\nType the next number\non the Gate 2 keypad.',-2.45,1.9,22.5,90,1.3,'#ffd9d9');
+const bs1=mk('a-plane',{position:'-2.47 1.9 22.5',rotation:'0 90 0',width:1.5,height:1.1,material:M('#3a0f14')});const bs2=T('BREACH LOG\n\nAlarm: 03:14\n(the Lab 07 clock\nstopped at this time)\n\nGATE CODE = this time\n(4 digits, no colon)',-2.45,1.9,22.5,90,1.3,'#ffd9d9');
 mk('a-plane',{position:'2.47 1.9 29',rotation:'0 -90 0',width:1.5,height:1.3,material:M('#e8edf0')});T('EXIT LOCK RULES\n\nMove all 3 discs\nto the RIGHT peg.\n\n1 disc at a time.\nNever put a big disc\non a small one.',2.45,1.9,29,-90,1.35,'#10181b');
-const bh=hit(-2.4,1.9,22.5,.2,1.1,1.5,()=>note('SECURITY QUESTION','2, 4, 8, 16, ?\n\nType the next number on the Gate 2 keypad.'));
+const bh=hit(-2.4,1.9,22.5,.2,1.1,1.5,()=>note('BREACH LOG','Alarm triggered at 03:14.\n(The clock in Lab 07 stopped at that time.)\n\nGATE CODE = the breach time.\n4 digits, no colon.'));
 hit(2.4,1.9,29,.2,1.3,1.5,()=>note('EXIT LOCK RULES','Move all 3 discs to the RIGHT peg.\n\nMove 1 disc at a time. Never put a big disc on a small one.'));
 T('SUBLEVEL 4 — EAST CORRIDOR',-2.45,3.0,8.2,90,2.2,'#6b8f9a');T('QUARANTINE ZONE',2.45,3.0,17.2,-90,2,'#ff5e6c');
 /* props: gurney, extinguisher, floor arrows, slime footprints */
@@ -612,16 +613,14 @@ for(let z=8,i=0;z<34;z+=1.3,i++)mk('a-circle',{position:`${i%2?.35:-.35} .02 ${z
 window.HB=[[1.25,1.95,21.3,23.3]];
 /* puzzle windows */
 const pin=(title,sub,len,code,ok)=>{let v='';L.openM(title,sub,c=>{const d=document.createElement('div');d.className='disp';d.textContent=Array(len).fill('_').join(' ');c.appendChild(d);const up=bad=>{d.textContent=v.padEnd(len,'_').split('').join(' ');d.classList.toggle('wrong',!!bad)};const g=document.createElement('div');g.className='grid';[1,2,3,4,5,6,7,8,9,'⌫',0,'↵'].forEach(k=>L.btn(k,()=>{if(k==='⌫')v=v.slice(0,-1);else if(k==='↵'){if(v===code){L.closeM();ok()}else{up(1);L.snd('error');L.cont(2);setTimeout(()=>{v='';up()},500)}return}else if(v.length<len)v+=k;up()},'',g));c.appendChild(g)})};
-const loFlip=(g,i)=>{const r=Math.floor(i/3),c=i%3;[[0,0],[1,0],[-1,0],[0,1],[0,-1]].forEach(([a,b])=>{const rr=r+a,cc=c+b;if(rr>=0&&rr<3&&cc>=0&&cc<3)g[rr*3+cc]^=1})};
-const lo=Array(9).fill(1),CN=['top-left','top-middle','top-right','middle-left','centre','middle-right','bottom-left','bottom-middle','bottom-right'],LS=[1,3,8];LS.forEach(i=>loFlip(lo,i));window.CIRCUIT_SOL=LS.map(i=>CN[i]).join(', ');
-const circuit=()=>L.openM('CIRCUIT PANEL','Turn ALL 9 lights ON. Each click also flips the lights next to it (up, down, left, right).',c=>{const g=document.createElement('div');g.className='grid';const bs=[];const paint=()=>bs.forEach((b,i)=>{b.textContent=lo[i]?'ON':'OFF';b.style.background=lo[i]?'#ffd25a':'#10222a';b.style.color=lo[i]?'#041014':'#7f9fab'});for(let i=0;i<9;i++){const b=L.btn('',()=>{loFlip(lo,i);paint();if(lo.every(v=>v)){L.closeM();L.snd('success');powerUp()}},'',g);b.style.height='62px';bs.push(b)}paint();c.appendChild(g)});
+const fuses=()=>{let q=[];const need=['green','blue','red'];L.openM('FUSE BOX','Press the fuses in the same order as the lamps on the wall (top to bottom).',c=>{const r=document.createElement('div');r.className='row';[['red','#ff3b4e'],['green','#2ee58a'],['blue','#2d8cff']].forEach(([n,col])=>{const b=L.btn(n.toUpperCase(),()=>{q.push(n);b.style.background=col;b.style.color='#041014';if(n!==need[q.length-1]){L.snd('error');L.cont(2);L.toast('Wrong fuse. The panel resets.');setTimeout(()=>{q=[];r.querySelectorAll('button').forEach(x=>{x.style.background='';x.style.color=''})},500);return}if(q.length===3){L.closeM();powerUp()}},'',r)});c.appendChild(r)})};
 const hanoi=()=>{let pegs=[[3,2,1],[],[]],sel=-1,mv=0;L.openM('EXIT LOCK','Move all 3 discs to the RIGHT peg. One disc at a time. A big disc can never sit on a small one. Click a peg to pick up its top disc, then click where to put it.',c=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:12px;justify-content:center;margin:12px 0 6px';const info=document.createElement('div');info.className='sub';const cols=[0,1,2].map(i=>{const b=document.createElement('div');b.style.cssText='width:92px;height:150px;border:2px solid #1d4452;border-radius:10px;display:flex;flex-direction:column-reverse;align-items:center;padding:8px 0;gap:4px;cursor:pointer;background:#0b1a20';b.onclick=()=>pick(i);row.appendChild(b);return b});
  const lab=document.createElement('div');lab.className='sub';lab.textContent='LEFT peg  ·  MIDDLE peg  ·  RIGHT peg';
  const draw=()=>{cols.forEach((b,i)=>{b.innerHTML='';b.style.borderColor=sel===i?'#ffd25a':'#1d4452';pegs[i].forEach(d=>{const e=document.createElement('div');e.style.cssText=`height:24px;width:${24+d*20}px;border-radius:6px;background:${['','#2ee58a','#27d3ff','#ffa51f'][d]}`;b.appendChild(e)})});info.textContent='Moves: '+mv};
  const pick=i=>{if(sel<0){if(pegs[i].length)sel=i;draw();return}if(sel===i){sel=-1;draw();return}const d=pegs[sel][pegs[sel].length-1],t=pegs[i][pegs[i].length-1];if(t&&t<d){L.toast('A big disc cannot sit on a small one.');sel=-1;draw();return}pegs[sel].pop();pegs[i].push(d);mv++;sel=-1;draw();if(pegs[2].length===3)setTimeout(()=>{L.closeM();L.snd('success');finish()},400)};
  c.appendChild(row);c.appendChild(lab);c.appendChild(info);draw()})};
-hit(-2.3,1.15,11.5,.2,.9,.9,()=>{if(ph!==1)return L.toast('The circuit panel is already working.');circuit()});
-hit(2.3,1.3,26.2,.2,.6,.5,()=>{if(ph<2)return L.toast('Locked. Fix the circuit first.');if(ph>2)return L.toast('This gate is already open.');pin('GATE 2 KEYPAD','What number comes next?  2, 4, 8, 16, ?',2,'32',gate2)});
+hit(-2.3,1.15,11.5,.2,.9,.9,()=>{if(ph!==1)return L.toast('The fuse box is already working.');fuses()});
+hit(2.3,1.3,26.2,.2,.6,.5,()=>{if(ph<2)return L.toast('Locked. Light the hallway first.');if(ph>2)return L.toast('This gate is already open.');pin('GATE 2 KEYPAD','The 4-digit time from the BREACH LOG.',4,'0314',gate2)});
 hit(1.8,1.3,34.8,.5,.6,.2,()=>{if(ph<3)return L.toast('Locked. Open the gate first.');hanoi()});
 /* the story beats */
 let ph=0,fl;
@@ -639,7 +638,7 @@ window.HX={mk,B,T,M,E,hit,note,pin,HW};window.HALL={start(){if(ph)return;ph=1;L.
  mw(-4.55,2.5,4.9,5,2.45,2);mw(4.55,2.5,4.9,5,2.45,2);mw(0,4.15,4.2,1.7,2.1,.68);
  if(blast)blast.setAttribute('animation','property:position;to:0 4.9 6.95;dur:2200;easing:easeInOutQuad');
  window.HO=true;window.HE=16.4;window.DARK=true;sc.setAttribute('fog','type:exponential;color:#010306;density:.2');HW.setAttribute('visible',true);
- L.snd('power');L.toast('The blast door slides open. Beyond it, the hallway is pitch black.',6000);L.setStage('HALLWAY POWER','Find the circuit panel in the dark hallway.');
+ L.snd('power');L.toast('The blast door slides open. Beyond it, the hallway is pitch black.',6000);L.setStage('HALLWAY POWER','Find the fuse box in the dark hallway.');
  let n=0;fl=setInterval(()=>{const e=strips[Math.random()*3|0];e.setAttribute('material','emissiveIntensity',1.4);setTimeout(()=>e.setAttribute('material','emissiveIntensity',.05),90)},2600)}};
 }})();
 </script>
@@ -675,142 +674,14 @@ addEventListener('keydown',e=>{if(e.code==='KeyN'&&e.target.tagName!=='TEXTAREA'
 
 
 <script>
-(function(){const $=s=>document.querySelector(s);
-const w=setInterval(()=>{if(window.HX&&window.HB){clearInterval(w);setTimeout(go,400)}},300);
-function go(){
-const {mk,B,T,M,E,hit,note,pin}=window.HX,L=window.LAB,HB=window.HB;
-const AC=new (window.AudioContext||window.webkitAudioContext)();addEventListener('click',()=>AC.resume());
-const ping=(f,d,w,v,ty)=>{const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+(w||0);o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.2,t);g.gain.exponentialRampToValueAtTime(.001,t+(d||.4));o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+(d||.4)+.05)};
-const NB=(()=>{const b=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1;return b})();
-const nz=(f,q,ty,d,v)=>{const s=AC.createBufferSource(),fl=AC.createBiquadFilter(),g=AC.createGain(),t=AC.currentTime;s.buffer=NB;fl.type=ty;fl.frequency.value=f;fl.Q.value=q;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);s.connect(fl);fl.connect(g);g.connect(AC.destination);s.start(t,Math.random());s.stop(t+d+.05)};
-window.SND={ping,nz};
-const tx=(w,h,f)=>{const c=document.createElement('canvas');c.width=w;c.height=h;f(c.getContext('2d'),w,h);return c.toDataURL()};
-const col2=(e,c)=>{e.setAttribute('material','color',c);e.setAttribute('material','emissive',c)};
-/* ---------- generic side room ---------- */
-const R=[];const RH=window.RH=window.RH||[];const camR=$('a-camera'),T3R=AFRAME.THREE;const lvR={};
-window.ROOMHINT=()=>{const p=new T3R.Vector3();camR.object3D.getWorldPosition(p);let key=null,ent=null;const r=R.find(r=>r.open&&p.x*r.s>2.6&&p.x*r.s<6.6&&Math.abs(p.z-r.z)<2.1);if(r){key=r.s+','+r.z;ent=RH.find(e=>e.s===r.s&&e.z===r.z)}if(!key||!ent)return null;const a=ent.get();if(!a)return "This room's puzzle is already solved.";const i=Math.min(lvR[key]||0,a.length-1);lvR[key]=(lvR[key]||0)+1;return a[i]};
-window.INR=(x,z)=>R.some(r=>r.open&&((x*r.s>2.1&&x*r.s<2.8&&Math.abs(z-r.z)<.52)||(x*r.s>=2.8&&x*r.s<6.3&&z>r.z-1.8&&z<r.z+1.8)));
-function room(o){const s=o.s,z=o.z,cx=s*4.5,r={s,z,open:false};R.push(r);const X=u=>s*(2.5+u),Z=v=>z+v;
- const wl=`color:${o.wall};roughness:.85;metalness:.1`;
- const pl=(x,y,zz,rot,wd,ht,m)=>mk('a-plane',{position:`${x} ${y} ${zz}`,rotation:rot,width:wd,height:ht,material:m});
- pl(cx,.004,z,'-90 0 0',4,4,`color:${o.floor};roughness:.6;metalness:.3`);pl(cx,3,z,'90 0 0',4,4,'color:#c9d0d2;roughness:.9');
- if(!o.glass)pl(s*6.5,1.5,z,`0 ${-s*90} 0`,4,3,wl);
- [[z-2,0],[z+2,180]].forEach(([zz,ry])=>pl(cx,1.5,zz,`0 ${ry} 0`,4,3,wl));
- [z-1.3,z+1.3].forEach(zz=>pl(s*2.52,1.5,zz,`0 ${s*90} 0`,1.4,3,wl));pl(s*2.52,2.7,z,`0 ${s*90} 0`,1.2,.6,wl);
- B(s*2.45,1.2,z-.64,.14,2.4,.14,E('#1f9d5c',1));B(s*2.45,1.2,z+.64,.14,2.4,.14,E('#1f9d5c',1));B(s*2.45,2.43,z,.14,.12,1.4,E('#1f9d5c',1));T('click to open',s*2.37,2.25,z,-s*90,1.1,'#9fe8c9');
- const pd=B(s*2.41,1.1,z,.06,2.1,1.1,M('#2a363c','metalness:.6'));T(o.name,s*2.37,2.6,z,-s*90,1.8,'#ffd25a');
- const led=mk('a-sphere',{position:`${s*2.37} 1.4 ${z+.68}`,radius:.04,material:E('#2ee58a',2)});
- const lt={setAttribute(){}};B(cx,2.95,z,1.4,.05,1,E(o.light||'#ffe2b0',1.3));
- hit(s*2.35,1.1,z,.3,2.2,1.3,()=>{if(r.open)return;r.open=true;window.ROOMN=(window.ROOMN||0)+1;const rh=document.getElementById('roomsHud');if(rh)rh.textContent='◆ Side rooms opened '+window.ROOMN+'/5';pd.setAttribute('animation',`property:position;to:${s*2.41} 3.5 ${z};dur:1400;easing:easeInOutQuad`);lt.setAttribute('light','intensity',o.li||1);col2(led,'#2ee58a');ping(300,.5);nz(900,.5,'lowpass',.6,.15);L.toast(o.name+' — the door slides open.',3500)});
- return {X,Z,s,z,pl,b:(u,y,v,w,h,d,m,ry)=>B(X(u),y,Z(v),w,h,d,m,ry),t:(tt,u,y,v,ry,w,c)=>T(tt,X(u),y,Z(v),ry,w,c),col:(u0,u1,v0,v1)=>{const a=X(u0),c=X(u1);HB.push([Math.min(a,c),Math.max(a,c),Z(v0),Z(v1)])},h:(u,y,v,w,hh,d,fn)=>hit(X(u),y,Z(v),w,hh,d,fn)}}
-const mkb=(p,t,c)=>{const e=document.createElement(t);for(const k in c)e.setAttribute(k,c[k]);p.appendChild(e);return e};
-const rowOf=c=>{const r=document.createElement('div');r.className='row';r.style.marginTop='10px';c.appendChild(r);return r};
-
-const rh=document.createElement('div');rh.id='roomsHud';rh.className='box';rh.style.cssText='position:fixed;top:146px;right:18px;z-index:5;pointer-events:none;font-size:11px;color:#9fe8c9;padding:6px 12px;opacity:.85;display:none';rh.textContent='◆ Side rooms opened 0/5';document.body.appendChild(rh);
-mk('a-plane',{position:'-2.47 1.7 7.95',rotation:'0 90 0',width:1.6,height:1.5,material:M('#10181b')});T('DIRECTORY\n\nWEST: Genetics Archive,\nCryo Vault, Observation,\nServer Room\n\nEAST: Staff Lounge',-2.45,1.7,7.95,90,1.4,'#9fe8c9');
-new MutationObserver(()=>{if($('#stageName').textContent==='HALLWAY POWER'){rh.style.display='block';setTimeout(()=>window.NEXUS('Side rooms along the corridor are open to explore. Click the doors with green frames. Press H inside a room for a hint.',9000),9000)}}).observe($('#stageName'),{childList:true,characterData:true,subtree:true});
-/* ---------- 1. GENETICS ARCHIVE: DNA pairing ---------- */
-{const g=room({s:-1,z:9.5,name:'GENETICS ARCHIVE',wall:'#9fb2b8',floor:'#26363b',light:'#dff4ff'});
- g.b(3.75,1.0,0,.5,2,3.4,M('#2a363c'));g.col(3.4,4,-1.8,1.8);
- for(let i=0;i<16;i++)mk('a-cylinder',{position:`${g.X(3.45)} ${.45+(i%4)*.45} ${g.Z(-1.35+Math.floor(i/4)*.9)}`,radius:.05,height:.2,material:E(['#2ee58a','#ffa51f','#2d8cff','#ff4fd8'][i%4],.8)});
- g.b(2,.5,0,.8,1,.8,M('#17232a'));g.col(1.5,2.5,-.5,.5);
- const hg=mk('a-entity',{position:`${g.X(2)} 1.45 ${g.Z(0)}`});for(let i=0;i<12;i++){const a=i*.6;mk('a-sphere',{position:`${Math.cos(a)*.15} ${(i-6)*.05} ${Math.sin(a)*.15}`,radius:.025,material:E(i%2?'#27d3ff':'#ff4fd8',2)},hg)}
- hg.setAttribute('animation','property:rotation;to:0 360 0;dur:6000;loop:true;easing:linear');
- let zm=0;g.h(2,1.4,0,.5,.8,.5,()=>{zm=(zm+1)%3;const k=[1,1.7,2.4][zm];hg.setAttribute('scale',`${k} ${k} ${k}`);L.toast('Hologram zoom x'+(zm+1))});
- g.b(1,.55,-1.4,.6,1.1,.6,M('#dfe8ea'));const lid=mk('a-cylinder',{position:`${g.X(1)} 1.15 ${g.Z(-1.4)}`,radius:.25,height:.1,material:M('#9aa4a6')});g.col(.6,1.4,-1.8,-1);
- g.h(1,1.1,-1.4,.7,.8,.7,()=>{lid.removeAttribute('animation');lid.setAttribute('animation','property:rotation;from:0 0 0;to:0 1440 0;dur:2600;easing:easeInOutQuad');[0,1,2,3].forEach(i=>ping(180+i*160,.4,i*.3,.07,'triangle'));L.toast('The centrifuge spins up, then slows. Nothing inside.')});
- g.b(2.6,1.15,1.85,.6,.7,.12,M('#10181b'));mk('a-plane',{position:`${g.X(2.6)} 1.25 ${g.Z(1.78)}`,rotation:'0 180 0',width:.5,height:.35,material:E('#0f6b4a',1)});g.t('PAIRING\nTERMINAL',2.6,1.8,1.75,180,1.2,'#3ddc8a');g.col(2.2,3,1.4,2);
- g.t('BASE PAIRS\nA <-> T\nC <-> G',1.2,1.8,-1.93,0,1.3,'#ffd25a');
- let done=false;const dna=()=>{if(done)return note('GENETICS FILE',"Donor lineage: VOSS, A.\nMatch: 100%.\nSubject 07 carries the same genetic scaffold as its creator.");const top='ACGTTG',cmp={A:'T',T:'A',C:'G',G:'C'},cyc=['A','T','C','G'],pick=Array(6).fill(-1);
-  L.openM('GENE PAIRING','Match each base with its partner (A-T, C-G). Click a box to change it.',c=>{const r1=rowOf(c);top.split('').forEach(x=>{const d=document.createElement('div');d.className='disp';d.style.cssText='font-size:22px;letter-spacing:0;padding:8px 10px;margin:0';d.textContent=x;r1.appendChild(d)});const r2=rowOf(c);top.split('').forEach((x,i)=>{const b=L.btn('?',()=>{pick[i]=(pick[i]+1)%4;b.textContent=cyc[pick[i]]},'',r2);b.style.padding='10px 14px'});
-   const r3=rowOf(c);L.btn('CHECK',()=>{if(top.split('').every((x,i)=>pick[i]>=0&&cyc[pick[i]]===cmp[x])){done=true;L.closeM();L.snd('success');note('GENETICS FILE',"Donor lineage: VOSS, A.\nMatch: 100%.\nSubject 07 carries the same genetic scaffold as its creator.")}else{L.snd('error');L.toast('Not every pair matches yet.')}},'',r3)})};
- g.h(2.6,1.2,1.8,.7,.8,.4,dna);RH.push({s:-1,z:9.5,get:()=>done?null:['Each base has one partner: A with T, and C with G. Fill in the bottom row.','The top row is A C G T T G, so the bottom row is T G C A A C.']})}
-
-/* ---------- 2. CRYO VAULT: pressure + temperature ---------- */
-{const c=room({s:-1,z:14.5,name:'CRYO VAULT',wall:'#7a98a8',floor:'#1b2a30',light:'#9fd8ff'});
- const pods=[-1.1,0,1.1].map(v=>{c.b(3.4,.15,v,.7,.3,.7,M('#10181b'));mk('a-cylinder',{position:`${c.X(3.4)} 1.1 ${c.Z(v)}`,radius:.3,height:1.8,material:'color:#bfe8ff;opacity:.25;transparent:true;metalness:.9;roughness:.05'});return mk('a-sphere',{position:`${c.X(3.4)} 1.0 ${c.Z(v)}`,radius:.2,scale:'1 1.8 1',material:E('#2d8cff',1.2)})});
- c.col(3,3.9,-1.5,1.5);c.t('SAFE SETTINGS\nPRESSURE 40 PSI\nTEMPERATURE -80 C',3.95,2.5,0,-c.s*90,2.2,'#bfe8ff');
- c.b(1.5,.55,1.8,.8,1.1,.4,M('#17232a'));mk('a-plane',{position:`${c.X(1.5)} 1.2 ${c.Z(1.58)}`,rotation:'0 180 0',width:.6,height:.35,material:E('#1a5a8a',1)});c.t('CRYO\nCONTROLS',1.5,1.75,1.6,180,1.2,'#bfe8ff');c.col(1.1,1.9,1.4,2);
- let ok=false;const cryo=()=>{if(ok)return L.toast('The pods hold steady.');let p=20,tm=-20;L.openM('CRYO CONTROLS','Set the safe pressure and temperature (see the wall sign).',m=>{const sl=(lab,mn,mx,v,u,set)=>{const d=document.createElement('div');d.style.margin='12px 0';const l=document.createElement('div');l.className='sub';const i=document.createElement('input');i.type='range';i.min=mn;i.max=mx;i.value=v;i.style.width='100%';const up=()=>{l.textContent=`${lab}: ${i.value} ${u}`;set(+i.value)};i.oninput=up;up();d.appendChild(l);d.appendChild(i);m.appendChild(d)};sl('PRESSURE',0,100,p,'PSI',v=>p=v);sl('TEMPERATURE',-150,0,tm,'C',v=>tm=v);
-   const r=rowOf(m);L.btn('SET',()=>{if(Math.abs(p-40)<=3&&Math.abs(tm+80)<=4){ok=true;L.closeM();pods.forEach(e=>col2(e,'#2ee58a'));L.snd('success');note('CRYO LOG',"Cell lines stored here: M. VOSS.\n\"Do not thaw until the cure is ready.\"")}else{L.snd('error');L.toast('The pods alarm. Check the wall sign.')}},'',r)})};
- c.h(1.5,1.2,1.75,.9,.8,.5,cryo);RH.push({s:-1,z:14.5,get:()=>ok?null:['The sign on the wall above the pods shows the safe settings.','Set the pressure to 40 PSI and the temperature to -80.']})}
-
-/* ---------- 3. OBSERVATION CHAMBER: UV lamp, code, blast shield, glass ---------- */
-{const o=room({s:-1,z:25,name:'OBSERVATION',wall:'#2a3a44',floor:'#141c20',light:'#6fd0ff',li:.6,glass:true});
- const dk='color:#05090b;roughness:1',bw='color:#0b2a3a;emissive:#0b2a3a;emissiveIntensity:.9';
- mk('a-plane',{position:'-8.5 .004 25',rotation:'-90 0 0',width:4,height:4,material:dk});mk('a-plane',{position:'-8.5 3 25',rotation:'90 0 0',width:4,height:4,material:dk});mk('a-plane',{position:'-10.5 1.5 25',rotation:'0 90 0',width:4,height:3,material:bw});
- [[23,0],[27,180]].forEach(([zz,ry])=>mk('a-plane',{position:`-8.5 1.5 ${zz}`,rotation:`0 ${ry} 0`,width:4,height:3,material:dk}));
- B(-8.8,2.95,25,1.4,.05,1,E('#4aa8ff',1.2));
- mk('a-plane',{position:'-6.5 1.5 25',rotation:'0 90 0',width:4,height:3,material:'color:#9fd8ff;opacity:.1;transparent:true;metalness:.9;roughness:.05;side:double'});
- B(-6.5,3.0,25,.12,.12,4,M('#10181b'));B(-6.5,.06,25,.12,.12,4,M('#10181b'));[23,27].forEach(zz=>B(-6.5,1.5,zz,.12,3,.12,M('#10181b')));
- const sil=mk('a-entity',{position:'-9.2 0 25'});const dk2='color:#010203;roughness:1';
- mk('a-cone',{position:'0 1.0 0','radius-top':.2,'radius-bottom':.08,height:.95,material:dk2},sil);mk('a-sphere',{position:'0 1.75 .05',radius:.2,scale:'.9 1.3 1',material:dk2},sil);
- [-.28,.28].forEach(x=>mk('a-cylinder',{position:`${x} 1.0 0`,radius:.02,height:.9,material:dk2},sil));[-.1,.1].forEach(x=>mk('a-cylinder',{position:`${x} .4 0`,radius:.035,height:.8,material:dk2},sil));
- sil.setAttribute('animation__m','property:position;to:-9.2 0 26.4;from:-9.2 0 23.6;dir:alternate;loop:true;dur:16000;easing:easeInOutSine');sil.setAttribute('animation__r','property:rotation;to:0 180 0;dir:alternate;loop:true;dur:11000;easing:easeInOutSine');
- const sh=B(-6.45,1.5,25,.1,3,4,M('#2a363c','metalness:.7'));T('BLAST SHIELD DOWN',-6.38,2.6,25,90,2,'#ff9d4a');
- const hp=mk('a-entity',{position:'-6.47 1.4 25.5',rotation:'0 90 0',visible:false});mkb(hp,'a-circle',{radius:.09,position:'0 0 0',material:'color:#9affc0;emissive:#9affc0;emissiveIntensity:.8;opacity:.5;transparent:true'});[[-.1,.14,-15],[-.05,.19,-4],[.02,.2,4],[.08,.17,14],[.15,.04,60]].forEach(([x,y,r])=>mkb(hp,'a-plane',{position:`${x} ${y} 0`,rotation:`0 0 ${r}`,width:.03,height:.12,material:'color:#9affc0;emissive:#9affc0;emissiveIntensity:.8;opacity:.5;transparent:true'}));
- const fg=mk('a-circle',{position:'-6.46 1.6 24.8',rotation:'0 90 0',radius:.45,visible:false,material:'color:#fff;opacity:.1;transparent:true;shader:flat'});fg.setAttribute('animation','property:scale;dir:alternate;loop:true;from:.8 .8 .8;to:1.2 1.2 1.2;dur:2600;easing:easeInOutSine');
- o.b(.9,.45,-1.5,.7,.9,.7,M('#17232a'));o.col(.5,1.3,-1.9,-1.1);const uvb=mk('a-box',{position:`${o.X(.9)} .98 ${o.Z(-1.5)}`,width:.25,height:.08,depth:.1,material:E('#6a2a9a',.6)});
- const uvT=mk('a-text',{value:'07 REMEMBERS\nCONSOLE CODE: 0707',position:`${o.X(2)} 1.6 ${o.Z(-1.93)}`,align:'center',width:1.6,color:'#d58aff',visible:false});const uvL={setAttribute(){}};
- let uv=false;o.h(.9,1,-1.5,.5,.6,.5,()=>{uv=!uv;uvT.setAttribute('visible',uv);uvL.setAttribute('light','intensity',uv?1.4:0);col2(uvb,uv?'#c58aff':'#6a2a9a');ping(uv?900:500,.15,0,.08);L.toast(uv?'UV light ON. Something is written on the wall.':'UV light OFF.')});
- o.b(1.3,.55,1.8,.9,1.1,.4,M('#17232a'));mk('a-plane',{position:`${o.X(1.3)} 1.25 ${o.Z(1.58)}`,rotation:'0 180 0',width:.6,height:.35,material:E('#1a4a6a',1)});o.t('SHIELD\nCONSOLE',1.3,1.8,1.6,180,1.2,'#6fd0ff');o.col(.8,1.8,1.4,2);
- let up=false;RH.push({s:-1,z:25,get:()=>up?null:(uv?['The UV light shows a code on the wall. Enter it on the shield console.','The code is 0707.']:['The UV lamp on the table can reveal hidden writing. Click it.','Turn the UV lamp on, then read the wall.'])});o.h(1.3,1.2,1.75,.9,.8,.5,()=>{if(up)return L.toast('The shield is already raised.');pin('OBSERVATION CONSOLE','Enter the 4-digit code.',4,'0707',()=>{up=true;sh.setAttribute('animation','property:position;to:-6.45 4.8 25;dur:2600;easing:easeInOutQuad');nz(120,3,'lowpass',2.4,.3);L.toast('The blast shield rises...',4000);setTimeout(()=>{fg.setAttribute('visible',true);hp.setAttribute('visible',true);nz(200,1,'lowpass',.3,.4);L.toast('A handprint slowly appears on the fogged glass, from the other side.',6000)},5000);note('OBSERVATION LOG',"Day 33: Subject 07 does not attack. It watches.\nIt copies my movements through the glass.\nWhen I wave, it waves back.")})})}
-
-/* ---------- 4. SERVER ROOM: pattern lock ---------- */
-{const v=room({s:-1,z:31,name:'SERVER ROOM',wall:'#1f2b30',floor:'#12191c',light:'#7fe0ff'});
- [-1.2,0,1.2].forEach(zz=>{v.b(3.6,1.1,zz,.9,2.2,.7,M('#0b1012'));for(let i=0;i<7;i++){const l=mk('a-sphere',{position:`${v.X(3.12)} ${.4+i*.28} ${v.Z(zz-.2+(i%3)*.2)}`,radius:.025,material:E(['#3ddc8a','#ffa51f','#27d3ff'][i%3],1.6)});l.setAttribute('animation',`property:material.emissiveIntensity;dir:alternate;loop:true;from:.2;to:2;dur:${400+Math.random()*900}`)}});v.col(3,4,-1.7,1.7);
- v.b(1.2,.4,-1.4,.9,.8,.7,M('#2a363c'));v.col(.7,1.7,-1.8,-1);
- const dr=mk('a-entity',{position:`${v.X(1.2)} 1.0 ${v.Z(-1.4)}`});mkb(dr,'a-sphere',{radius:.08,material:M('#5a6a6c')});[[.12,.12],[-.12,.12],[.12,-.12],[-.12,-.12]].forEach(([x,z])=>mkb(dr,'a-cylinder',{position:`${x} .03 ${z}`,radius:.07,height:.01,material:M('#222')}));
- v.h(1.2,1.0,-1.4,.5,.4,.5,()=>{nz(3000,1,'bandpass',.12,.3);L.toast('A broken drone. One propeller is missing and the camera is cracked. A tiny spark jumps from it.')});
- v.b(1.3,.55,1.8,.9,1.1,.4,M('#17232a'));mk('a-plane',{position:`${v.X(1.3)} 1.3 ${v.Z(1.58)}`,rotation:'0 180 0',width:.7,height:.4,material:E('#6a0f1a',1)});v.t('LOG 07\n▒▒ ▒█▒▒ ▒▒\nCLICK TO READ',1.3,1.3,1.57,180,.9,'#ff8a9a');v.col(.8,1.8,1.4,2);
- v.h(1.3,1.2,1.75,.9,.8,.4,()=>note('CORRUPTED LOG',"▒▒▒ DAY 4▒ ▒▒▒ it is not angry\n▒▒ copy... copy... ▒▒▒ my voice\n\n▒▒ it only wants to go home ▒▒"));
- const sbtn=[['#ff3b4e',523],['#2ee58a',659],['#2d8cff',784],['#ffd25a',1047]];
- v.b(3.9,1.3,0,.1,.7,1.4,M('#10181b'));sbtn.forEach(([c],i)=>mk('a-sphere',{position:`${v.X(3.82)} ${1.15+Math.floor(i/2)*.25} ${v.Z(-.25+(i%2)*.5)}`,radius:.07,material:E(c,1.6)}));v.t('PATTERN LOCK',3.85,1.85,0,-v.s*90,1.4,'#7fe0ff');
- let done=false;RH.push({s:-1,z:31,get:()=>done?null:['Press PLAY, listen and watch, then repeat the same colours in the same order.','The pattern is red, blue, blue, green, yellow.']});v.h(3.8,1.3,0,.4,.8,1.4,()=>{if(done)return L.toast('The rack has already unlocked.');const seq=[0,2,2,1,3];let inp=[],lock=false;
-  L.openM('PATTERN LOCK','Press PLAY. Watch and listen, then repeat the pattern.',c=>{const g=document.createElement('div');g.className='grid';g.style.gridTemplateColumns='repeat(2,1fr)';const bs=sbtn.map(([col,f],i)=>{const b=L.btn('♪',()=>{if(lock)return;flashB(i);inp.push(i);if(i!==seq[inp.length-1]){inp=[];L.snd('error');L.toast('Wrong note. Press PLAY to hear it again.');return}if(inp.length===seq.length){done=true;L.closeM();L.snd('success');note('SERVER LOG',"Backup restored.\nSubject 07 vitals are stable. It is not in pain.\nIt is only lonely.")}},'',g);b.style.cssText=`background:${col};color:#041014;height:70px;font-size:24px`;return b});
-   const flashB=i=>{ping(sbtn[i][1],.4,0,.2);bs[i].style.opacity='.4';setTimeout(()=>bs[i].style.opacity='1',250)};c.appendChild(g);const r=rowOf(c);L.btn('PLAY',()=>{lock=true;inp=[];seq.forEach((k,j)=>setTimeout(()=>{flashB(k);if(j===seq.length-1)setTimeout(()=>lock=false,500)},400+j*650))},'',r)})})}
-
-/* ---------- 5. STAFF LOUNGE: torn memo, radio, mug, fan, plush ---------- */
-{const k=room({s:1,z:9.5,name:'STAFF LOUNGE',wall:'#b9a98a',floor:'#6a5a48',light:'#ffe2b0'});
- k.b(2,.4,0,1.2,.8,1.6,M('#7a5535'));k.col(1.3,2.7,-.9,.9);
- const mug=mk('a-entity',{position:`${k.X(2)} .9 ${k.Z(-.5)}`});mkb(mug,'a-cylinder',{radius:.05,height:.1,material:M('#e8edf0')});
- k.h(2,.95,-.5,.25,.25,.25,()=>{mug.setAttribute('animation','property:rotation;to:0 0 80;dur:700;easing:easeInQuad');mkb(HW_(),'a-circle',{position:`${k.X(2)} .811 ${k.Z(-.7)}`,rotation:'-90 0 0',radius:.14,material:'color:#3a2a1a;roughness:.3'});nz(800,1,'lowpass',.15,.2);L.toast('The mug tips over. Cold coffee spills across the table.')});
- [[1.7,.2],[1.85,.3]].forEach(([u,v])=>mk('a-cylinder',{position:`${k.X(u)} .82 ${k.Z(v)}`,rotation:'0 0 90',radius:.008,height:.14,material:M('#2d8cff')}));
- k.h(1.75,.85,.25,.3,.2,.3,'A pen. It still works. It writes in green ink.');
- const tb=mk('a-box',{position:`${k.X(2.3)} .88 ${k.Z(.5)}`,width:.2,height:.12,depth:.35,material:M('#c9303f')});let ti=0;const tools=['A wrench. Too big for any bolt in this lab.','A screwdriver. The handle has "VOSS" scratched into it.','A roll of tape. Someone stuck a drawing of a rainbow to the lid.'];
- k.h(2.3,.9,.5,.3,.3,.45,()=>{L.toast(tools[ti++%3])});
- const piece=mk('a-plane',{position:`${k.X(1.75)} .815 ${k.Z(-.1)}`,rotation:'-90 0 20',width:.3,height:.2,material:'color:#e8e4d0;roughness:1'});let td=false;RH.push({s:1,z:9.5,get:()=>td?null:['The torn pieces make one sentence from a letter. Start with the greeting.','Order: Dear Dr. Voss, / the board has voted / to shut Project 07 down / effective immediately.']});const MEMO="To: Dr. A. Voss\nFrom: The Board\n\nDear Dr. Voss, the board has voted to shut Project 07 down, effective immediately. All samples are to be destroyed.\n\nDo not contact the subject's family.\n— Nexonyx Biotech";
- k.h(1.75,.85,-.1,.4,.2,.4,()=>{if(td)return note('REBUILT MEMO',MEMO);const ord=['Dear Dr. Voss,','the board has voted','to shut Project 07 down','effective immediately.'],sh=[3,1,0,2];let got=[];L.openM('TORN MEMO','Click the pieces in the right order to rebuild the memo.',c=>{const out=document.createElement('p');out.style.cssText='min-height:3em;color:#ffd25a;margin-bottom:12px';c.appendChild(out);sh.forEach(i=>{const b=L.btn(ord[i],()=>{if(i!==got.length){got=[];out.textContent='';L.snd('error');L.toast('That piece does not fit there.');c.querySelectorAll('button').forEach(x=>x.style.display='block');return}got.push(i);out.textContent=got.map(q=>ord[q]).join(' ');b.style.display='none';if(got.length===4){td=true;L.closeM();L.snd('success');note('REBUILT MEMO',MEMO)}},'',c);b.style.cssText='display:block;margin:6px auto;width:100%'})})});
- const chr=mk('a-entity',{position:`${k.X(1)} 0 ${k.Z(1.1)}`});mkb(chr,'a-box',{position:'0 .45 0',width:.45,height:.06,depth:.45,material:M('#2a3c45')});mkb(chr,'a-box',{position:'-.2 .7 0',width:.05,height:.5,depth:.45,material:M('#2a3c45')});mkb(chr,'a-cylinder',{position:'0 .22 0',radius:.03,height:.44,material:M('#9aa4a6')});
- let pushed=false;k.h(1,.5,1.1,.6,.9,.6,()=>{if(pushed)return L.toast('The chair is stuck against the wall.');pushed=true;chr.setAttribute('animation',`property:position;to:${k.X(1)} 0 ${k.Z(1.75)};dur:1200;easing:easeOutQuad`);nz(600,1,'lowpass',.8,.12);L.toast('You push the chair. It rolls away squeaking.')});
- k.b(3.7,.9,-1.4,.6,1.8,.7,M('#dfe8ea'));k.col(3.3,4,-1.8,-1);mk('a-plane',{position:`${k.X(3.39)} 1.4 ${k.Z(-1.4)}`,rotation:'0 -90 0',width:.2,height:.2,material:'color:#ffe27a;roughness:1'});k.t('Voss owes\nme $20 - Dave',3.4,1.4,-1.4,-90,.4,'#333');
- k.h(3.5,1.2,-1.4,.5,.8,.7,'A joke note on the fridge: "Voss owes me $20. - Dave". Next to it, a bad drawing of Dave.');
- k.b(3.7,1.0,.6,.6,2,.8,M('#2a3c8a'));mk('a-plane',{position:`${k.X(3.39)} 1.3 ${k.Z(.6)}`,rotation:'0 -90 0',width:.6,height:.9,material:E('#2a6aaa',.9)});k.col(3.3,4,.2,1);
- k.h(3.5,1.2,.6,.5,1.8,.8,'The vending machine only sells coffee. Every button says OUT OF ORDER.');
- k.b(3.6,.4,1.6,.5,.8,.5,M('#5a3b22'));k.col(3.3,3.9,1.3,1.9);mk('a-box',{position:`${k.X(3.6)} .9 ${k.Z(1.6)}`,width:.15,height:.2,depth:.3,material:M('#2a2a2a')});
- let rc=0;const ch=['CH 1: Static. Just static.','CH 2: A soft lullaby plays, very faintly.','CH 3: "...all personnel evacuate Sublevel 4..." The message repeats.','CH 4: Silence. Then, very faintly, someone humming.'];
- k.h(3.6,.9,1.6,.4,.4,.5,()=>{rc=(rc+1)%4;L.toast(ch[rc],4500);if(rc===0||rc===2)nz(2500,.5,'bandpass',.8,.15);if(rc===1)[523,659,784,659].forEach((f,i)=>ping(f,.5,i*.4,.12));if(rc===3)ping(220,1.2,0,.05)});
- const fan=mk('a-entity',{position:`${k.X(.8)} .9 ${k.Z(-1.5)}`});mkb(fan,'a-cylinder',{position:'0 -.45 0',radius:.12,height:.05,material:M('#444')});mkb(fan,'a-cylinder',{position:'0 -.22 0',radius:.015,height:.45,material:M('#666')});
- const bl=mkb(fan,'a-entity',{});[0,120,240].forEach(r=>mkb(bl,'a-box',{rotation:`0 ${r} 0`,position:'0 0 0',width:.28,height:.01,depth:.07,material:M('#9aa4a6')}));let fs=false;k.h(.8,.7,-1.5,.4,.8,.4,()=>{fs=!fs;if(fs)bl.setAttribute('animation','property:rotation;to:0 360 0;dur:500;loop:true;easing:linear');else bl.removeAttribute('animation');nz(1500,.4,'bandpass',.5,.08);L.toast(fs?'The fan whirs to life.':'The fan stops.')});k.col(.5,1.1,-1.8,-1.2);
- const qr=tx(84,84,(g,w,h)=>{g.fillStyle='#fff';g.fillRect(0,0,w,h);g.fillStyle='#000';for(let y=0;y<21;y++)for(let x=0;x<21;x++)if(Math.random()<.5)g.fillRect(x*4,y*4,4,4);[[0,0],[56,0],[0,56]].forEach(([x,y])=>{g.fillStyle='#000';g.fillRect(x,y,28,28);g.fillStyle='#fff';g.fillRect(x+4,y+4,20,20);g.fillStyle='#000';g.fillRect(x+8,y+8,12,12)})});
- mk('a-plane',{position:`${k.X(3.98)} 1.7 ${k.Z(-.3)}`,rotation:'0 -90 0',width:.4,height:.4,material:{src:qr,shader:'flat'}});k.h(3.9,1.7,-.3,.2,.5,.5,'A QR code stuck to the wall. Scanning... "Subject 07 was here."');
- const pl=mk('a-entity',{position:`${k.X(2)} .87 ${k.Z(.6)}`});mkb(pl,'a-sphere',{radius:.07,scale:'1 .9 1',material:E('#39ff88',.6)});[-.03,.03].forEach(x=>mkb(pl,'a-sphere',{position:`${x} .02 .06`,radius:.018,material:'color:#000'}));
- const plHit=hit(k.X(2),.9,k.Z(.6),.25,.25,.25,'A tiny plush of Subject 07. Someone in the lab made it as a joke. Its button eyes are a little too real.');
- const spots=[[2,.87,.6],[3.7,1.85,-1.4],[1,.75,1.1]];let si=0;const cam=document.querySelector('a-camera'),T3=AFRAME.THREE,pv=new T3.Vector3(),fv=new T3.Vector3();
- setInterval(()=>{if(!k.X)return;cam.object3D.getWorldPosition(pv);cam.object3D.getWorldDirection(fv);fv.negate();const p=pl.object3D.position,dx=p.x-pv.x,dz=p.z-pv.z,d=Math.hypot(dx,dz)||1,dot=(dx*fv.x+dz*fv.z)/d;if(dot<0&&d>2.5&&Math.random()<.06){si=(si+1)%3;const[u,y,v]=spots[si];pl.setAttribute('position',`${k.X(u)} ${y} ${k.Z(v)}`);plHit.setAttribute('position',`${k.X(u)} ${y+.03} ${k.Z(v)}`)}},800)}
-function HW_(){return window.HX.HW}
-
-/* ---------- hallway extras ---------- */
-B(-2.42,1.3,33.6,.1,2.6,1.4,M('#6b7f88','metalness:.8'));B(-2.36,1.3,33.6,.02,2.6,.03,M('#111'));T('ELEVATOR\nOUT OF ORDER',-2.35,2.9,33.6,90,1.4,'#ff5e6c');hit(-2.33,1.3,33.6,.3,2.6,1.5,'The elevator is dead. Through a gap in the doors you can see empty cables swinging in the dark shaft.');
-B(2.42,1.3,33.6,.1,2.6,1.4,M('#4a4a4a'));B(1.9,.2,33.5,.9,.4,1.3,M('#555','roughness:1'));B(1.7,.5,34.1,.6,.3,.5,M('#444','roughness:1'));T('STAIRWELL B\nBLOCKED',2.35,2.9,33.6,-90,1.4,'#ff5e6c');hit(2.2,1.0,33.6,.6,2.4,1.5,'Stairwell B. Concrete and steel beams have collapsed across the stairs. There is no way up.');
-const grate=B(-2.46,.5,28.5,.06,.7,.9,M('#4a5e66'));B(-2.47,.5,28.5,.04,.7,.9,'color:#000');let gOpen=false;
-hit(-2.4,.5,28.5,.2,.8,1,()=>{if(gOpen)return note('CRAWLSPACE',"An old vent leads to a tiny crawlspace. Scratched into the metal:\n\n\"07 WAS HERE.\"");gOpen=true;grate.setAttribute('animation','property:position;to:-2.2 .05 28.5;dur:600;easing:easeInQuad');nz(900,2,'bandpass',.5,.3);setTimeout(()=>{mk('a-sphere',{position:'-2.4 .25 28.5',radius:.08,scale:'1 .9 1',material:E('#39ff88',.6)});L.toast('The grate clatters to the floor. Inside the crawlspace: a tiny plush toy and scratched writing.',5500)},500)});
-B(-2.43,1.3,18.3,.1,.3,.2,M('#10181b'));const sp=mk('a-sphere',{position:'-2.37 1.4 18.3',radius:.025,material:E('#ffb040',4)});sp.setAttribute('animation','property:material.emissiveIntensity;dir:alternate;loop:true;from:0;to:5;dur:300');hit(-2.35,1.3,18.3,.2,.4,.4,()=>{nz(3200,1,'bandpass',.12,.3);L.toast('A broken badge reader. It sparks and repeats: "WELCOME, DR. VOSS. WELCOME, DR. VOSS."')});
+/* hallway props: locked / broken things that add atmosphere */
+(function(){const w=setInterval(()=>{if(window.HX){clearInterval(w);go()}},300);
+function go(){const {mk,B,T,M,E,hit}=window.HX;
+B(-2.42,1.3,33.6,.1,2.6,1.4,M('#6b7f88','metalness:.8'));B(-2.36,1.3,33.6,.02,2.6,.03,M('#111'));T('ELEVATOR\nOUT OF ORDER',-2.35,2.9,33.6,90,1.4,'#ff5e6c');hit(-2.33,1.3,33.6,.3,2.6,1.5,'The elevator is dead. Cables swing in the dark shaft.');
+B(2.42,1.3,33.6,.1,2.6,1.4,M('#4a4a4a'));B(1.9,.2,33.5,.9,.4,1.3,M('#555','roughness:1'));B(1.7,.5,34.1,.6,.3,.5,M('#444','roughness:1'));T('STAIRWELL B\nBLOCKED',2.35,2.9,33.6,-90,1.4,'#ff5e6c');hit(2.2,1.0,33.6,.6,2.4,1.5,'Stairwell B. The stairs have collapsed. No way up.');
+B(-2.43,1.3,18.3,.1,.3,.2,M('#10181b'));const sp=mk('a-sphere',{position:'-2.37 1.4 18.3',radius:.025,material:E('#ffb040',4)});sp.setAttribute('animation','property:material.emissiveIntensity;dir:alternate;loop:true;from:0;to:5;dur:300');hit(-2.35,1.3,18.3,.2,.4,.4,'A broken badge reader. It sparks and repeats: "WELCOME, DR. VOSS."');
 T('IT SINGS WHEN IT IS ALONE',2.46,1.6,12.7,-90,1.4,'#7a1018');T('DO NOT TRUST THE ELEVATOR',-2.46,1.5,17.9,90,1.5,'#7a1018');
 [[2.47,1.5,12.2,-90,'If the lights flicker, it is NOT the wiring. - Maintenance'],[-2.47,1.5,16.2,90,'Fuse lamps: read them from the TOP down. - Tom'],[2.47,1.5,22,-90,'Gate 2 code is a time. No colon. Think clock. - Security']].forEach(([x,y,z,ry,m])=>{mk('a-plane',{position:`${x} ${y} ${z}`,rotation:`0 ${ry} 0`,width:.2,height:.2,material:'color:#ffe27a;roughness:1'});hit(x*.97,y,z,.2,.3,.3,m)});
-/* airflow puzzle */
-B(2.43,1.3,18.2,.1,.5,.4,M('#10181b'));mk('a-plane',{position:'2.37 1.4 18.2',rotation:'0 -90 0',width:.3,height:.15,material:E('#1a5a8a',1)});T('AIRFLOW\nPANEL',2.36,1.85,18.2,-90,1.1,'#7fe0ff');
-let aok=false;hit(2.35,1.3,18.2,.2,.6,.5,()=>{if(aok)return L.toast('The decon fans are running again.');const ar=['→','↓','←','↑'],need=[0,1,0],st=[2,3,2];L.openM('AIRFLOW PANEL','Make the air flow right, then down, then right. Click a pipe to turn it.',c=>{const r=rowOf(c);st.forEach((v,i)=>{const b=L.btn(ar[v],()=>{st[i]=(st[i]+1)%4;b.textContent=ar[st[i]]},'',r);b.style.cssText='font-size:30px;width:70px;height:70px'});const r2=rowOf(c);L.btn('CHECK',()=>{if(st.every((v,i)=>v===need[i])){aok=true;L.closeM();L.snd('success');note('AIRFLOW RESTORED',"The decon fans spin up. Fresh air moves down the corridor, carrying a faint smell of coffee.")}else{L.snd('error');L.toast('The air is not flowing correctly.')}},'',r2)})});
 }})();
 </script>
 
@@ -820,9 +691,14 @@ a-scene.shake canvas{animation:sk .6s}@keyframes sk{0%,100%{transform:none}15%{t
 </style>
 <script>
 (function(){const $=s=>document.querySelector(s);
-const w=setInterval(()=>{if(window.LAB&&window.NEXUS&&window.SND&&window.HX&&$('#world')){clearInterval(w);go()}},300);
+const w=setInterval(()=>{if(window.LAB&&window.NEXUS&&window.HX&&$('#world')){clearInterval(w);go()}},300);
+function mkSnd(){const AC=new (window.AudioContext||window.webkitAudioContext)();addEventListener('click',()=>AC.resume());
+ const ping=(f,d,w,v,ty)=>{const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+(w||0);o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.2,t);g.gain.exponentialRampToValueAtTime(.001,t+(d||.4));o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+(d||.4)+.05)};
+ const NB=(()=>{const b=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1;return b})();
+ const nz=(f,q,ty,d,v)=>{const s=AC.createBufferSource(),fl=AC.createBiquadFilter(),g=AC.createGain(),t=AC.currentTime;s.buffer=NB;fl.type=ty;fl.frequency.value=f;fl.Q.value=q;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);s.connect(fl);fl.connect(g);g.connect(AC.destination);s.start(t,Math.random());s.stop(t+d+.05)};
+ return{ping,nz}}
 function go(){
-const L=window.LAB,W=$('#world'),sc=$('#scene'),{ping,nz}=window.SND,{mk,B,M,E,HW}=window.HX,cam=$('a-camera');
+const L=window.LAB,W=$('#world'),sc=$('#scene'),{ping,nz}=mkSnd(),{mk,B,M,E,HW}=window.HX,cam=$('a-camera');
 const stage=()=>$('#stageName').textContent,cont=()=>parseInt($('#meterPct').textContent)||0;
 const mkw=(t,a,p)=>{const e=document.createElement(t);for(const k in a)e.setAttribute(k,a[k]);(p||W).appendChild(e);return e};
 const shake=()=>{sc.classList.remove('shake');void sc.offsetWidth;sc.classList.add('shake')};
@@ -889,9 +765,11 @@ body,button,.box,#modal,.overlay,#nexus,#relock,#toast,#objectiveBox,#meterBox,#
 .mb h2{font-size:12px!important;letter-spacing:2.2px!important;color:#7fd8f0!important}
 .sub{font-size:12px!important;color:#7f9fab!important}
 .mb p{font-size:14px!important;line-height:1.65!important;color:#d4e4ea!important}
-button{border-radius:8px!important;border:1px solid rgba(39,211,255,.45)!important;background:rgba(39,211,255,.07)!important;letter-spacing:1px!important;transition:background .15s,color .15s!important}
-button:hover{background:#27d3ff!important;color:#04141a!important}
-.grid button{border-radius:10px!important;background:#10222a!important;border:1px solid rgba(140,210,235,.18)!important}
+button{border-radius:8px;border:1px solid rgba(39,211,255,.45);background:rgba(39,211,255,.07);letter-spacing:1px;transition:background .15s,color .15s}
+button:hover{background:#27d3ff;color:#04141a}
+.grid button{border-radius:10px;background:#10222a;border:1px solid rgba(140,210,235,.18)}
+.grid button.done,.grid button.done:hover{background:#2ee58a;color:#041014;border-color:#2ee58a}
+.grid button.wrong,.grid button.wrong:hover{background:#ff3b4e;color:#fff;border-color:#ff3b4e}
 .mclose{border:none!important;background:none!important;color:#7f9fab!important}.mclose:hover{background:none!important;color:#fff!important}
 .disp{border-radius:10px!important;border:1px solid rgba(140,210,235,.18)!important}
 .overlay{background:radial-gradient(ellipse at center,#0c1d26 0%,#04080a 75%)!important}
